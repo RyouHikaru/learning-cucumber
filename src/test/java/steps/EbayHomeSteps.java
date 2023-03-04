@@ -60,7 +60,7 @@ public class EbayHomeSteps {
         driver.findElement(By.xpath("//input[@id='gh-ac']")).sendKeys(string);
         List<WebElement> cat = driver.findElements(By.xpath("//select[@id='gh-cat']/option"));
         for (WebElement x : cat) {
-            if (x.getText().trim().toLowerCase().equals(string2.toLowerCase())) {
+            if (x.getText().trim().equalsIgnoreCase(string2)) {
                 x.click();
                 break;
             }
