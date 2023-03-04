@@ -13,10 +13,20 @@ public class CommonSteps {
         driver = new EdgeDriver();
     }
 
+    @After("@Test")
+    public void testAfterHooker() {
+        System.out.println("Scenario specific hooks - testAfterHooker executed");
+    }
+
     @After
     public void tearDown() throws InterruptedException {
         driver.quit();
         Thread.sleep(1000);
+    }
+
+    @Before("@setCookies")
+    public void setCookies() {
+        System.out.println("Scenario specific hooks - setCookies executed");
     }
 
     public WebDriver getDriver() {

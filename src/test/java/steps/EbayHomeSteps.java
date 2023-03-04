@@ -5,6 +5,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static org.junit.Assert.fail;
 
@@ -35,19 +38,53 @@ public class EbayHomeSteps {
         }
     }
 
-    @When("I searched for iPhone 14")
-    public void i_searched_for_i_phone() {
-        driver.findElement(By.xpath("//input[@id='gh-ac']")).sendKeys("iphone 14");
+    @When("I searched for {string}")
+    public void i_searched_for_i_phone(String str1) throws InterruptedException {
+        driver.findElement(By.xpath("//input[@id='gh-ac']")).sendKeys(str1);
         driver.findElement(By.xpath("//input[@id='gh-btn']")).click();
+        Thread.sleep(1000);
     }
 
-    @Then("I validate at least 2400 search items present")
-    public void i_validate_at_least_search_items_present() {
+    @Then("I validate at least {int} search items present")
+    public void i_validate_at_least_search_items_present(int count) {
         String itemCountRawText = driver.findElement(By.cssSelector("h1.srp-controls__count-heading>span.BOLD:first-child")).getText().trim();
         String itemCountText = itemCountRawText.replace(",", "");
         int itemCount = Integer.parseInt(itemCountText);
-        if (itemCount < 2400) {
-            fail("Less than 2400 results shown");
+        if (itemCount < count) {
+            fail("Less than " + count + " results shown");
         }
     }
+
+    @When("I search for {string} in {string} category")
+    public void i_search_for_in_category(String string, String string2) throws InterruptedException {
+        driver.findElement(By.xpath("//input[@id='gh-ac']")).sendKeys(string);
+        List<WebElement> cat = driver.findElements(By.xpath("//select[@id='gh-cat']/option"));
+        for (WebElement x : cat) {
+            if (x.getText().trim().toLowerCase().equals(string2.toLowerCase())) {
+                x.click();
+                break;
+            }
+        }
+        driver.findElement(By.xpath("//input[@id='gh-btn']")).click();
+        Thread.sleep(1000);
+    }
+
+    @When("I click on {string}")
+    public void i_click_on(String string) throws InterruptedException {
+        driver.findElement(By.linkText(string)).click();
+        Thread.sleep(1000);
+    }
+
+    @Then("I validate that page navigates to {string} and title contains {string}")
+    public void i_validate_that_page_navigates_to_and_title_contains(String url, String title) {
+        String actualURL = driver.getCurrentUrl();
+        String actualTitle = driver.getTitle();
+        if (!actualURL.equals(url)) {
+            fail("Page did not navigated to expected URL");
+        }
+        if (!actualTitle.contains(title)) {
+            fail("Title mismatch");
+        }
+    }
+
 }
