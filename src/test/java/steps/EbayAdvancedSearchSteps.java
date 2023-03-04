@@ -40,9 +40,9 @@ public class EbayAdvancedSearchSteps {
     public void i_advanced_search_an_item(DataTable dataTable) throws InterruptedException {
         driver.findElement(By.xpath("//input[@id='_nkw']")).sendKeys(dataTable.cell(1, 0));
         driver.findElement(By.xpath("//input[@id='_ex_kw']")).sendKeys(dataTable.cell(1, 1));
-        driver.findElement(By.xpath("//input[@id='_udlo']")).sendKeys(dataTable.cell(1, 2));
-        driver.findElement(By.xpath("//input[@id='_udhi']")).sendKeys(dataTable.cell(1, 3));
-        driver.findElement(By.xpath("//button[@id-'searchBtnLowerLink]")).click();
+        driver.findElement(By.xpath("//input[@id='s0-1-17-5[2]-@range-comp[]-@range-textbox[]-textbox']")).sendKeys(dataTable.cell(1, 2));
+        driver.findElement(By.xpath("//input[@id='s0-1-17-5[2]-@range-comp[]-@range-textbox[]_1-textbox']")).sendKeys(dataTable.cell(1, 3));
+        driver.findElement(By.xpath("//body/div[3]/div[1]/main[1]/form[1]/div[2]/button[1]")).click();
         Thread.sleep(3000);
     }
 }
