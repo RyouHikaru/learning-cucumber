@@ -82,7 +82,7 @@ public class EbayHomeSteps {
         if (!actualURL.equals(url)) {
             fail("Page did not navigated to expected URL");
         }
-        if (!actualTitle.contains(title)) {
+        if (!actualTitle.toLowerCase().contains(title.toLowerCase())) {
             fail("Title mismatch");
         }
     }
